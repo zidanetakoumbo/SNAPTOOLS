@@ -1,0 +1,87 @@
+<section class="page">
+  <h1>Calculatrice Scientifique en Ligne Gratuite</h1>
+  <p>
+    Effectuez des calculs scientifiques avec fonctions trigonométriques, logarithmes, puissances et
+    racines. Votre historique est conservé localement, même hors-ligne.
+  </p>
+
+  <div class="card calculator">
+    <h2 class="visually-hidden">Écran et clavier de la calculatrice</h2>
+
+    <div class="mode-toggle" role="group" aria-label="Choisir le mode d'angle">
+      <button
+        type="button"
+        class="mode-btn"
+        [class.active]="angleMode === 'deg'"
+        (click)="setAngleMode('deg')"
+        aria-label="Mode degrés"
+      >
+        DEG
+      </button>
+      <button
+        type="button"
+        class="mode-btn"
+        [class.active]="angleMode === 'rad'"
+        (click)="setAngleMode('rad')"
+        aria-label="Mode radians"
+      >
+        RAD
+      </button>
+    </div>
+
+    <div class="display" aria-live="polite">
+      <div class="display-value">{{ display }}</div>
+      @if (errorMessage) {
+        <div class="display-error">{{ errorMessage }}</div>
+      }
+    </div>
+
+    <div class="keypad">
+      @for (row of buttonRows; track $index) {
+        <div class="keypad-row">
+          @for (button of row; track button.value) {
+            <button
+              type="button"
+              class="key"
+              [class.key-function]="button.type === 'function' || button.type === 'constant'"
+              [class.key-action]="button.type === 'action'"
+              (click)="press(button)"
+              [attr.aria-label]="button.ariaLabel"
+            >
+              {{ button.label }}
+            </button>
+          }
+        </div>
+      }
+      <button type="button" class="btn-primary key-equals" (click)="evaluate()" aria-label="Calculer le résultat">
+        =
+      </button>
+    </div>
+  </div>
+
+  <section class="card history-section" aria-label="Historique des calculs">
+    <div class="history-header">
+      <h2>Historique</h2>
+      @if (history.length) {
+        <button type="button" class="btn-secondary" (click)="clearHistory()" aria-label="Effacer l'historique">
+          Effacer
+        </button>
+      }
+    </div>
+
+    @if (history.length === 0) {
+      <p class="empty-state">Aucun calcul pour le moment.</p>
+    } @else {
+      <ul class="history-list">
+        @for (entry of history; track $index) {
+          <li>
+            <button type="button" class="history-item" (click)="useHistoryEntry(entry)">
+              <span class="history-expr">{{ entry.expression }}</span>
+              <span class="history-result">= {{ entry.result }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</section>

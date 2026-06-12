@@ -1,0 +1,80 @@
+.card {
+  margin-bottom: 1rem;
+}
+
+.duration-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.status {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.timer-card {
+  transition: background 0.3s ease;
+}
+
+.timer-card.finished {
+  background: #eef6ff;
+  border: 1px solid var(--color-primary);
+}
+
+.timer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timer-header h2 {
+  margin: 0;
+}
+
+.remove-btn {
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+}
+
+.remove-btn:hover {
+  color: var(--color-danger);
+}
+
+.timer-display {
+  font-size: 2.4rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0.5rem 0;
+  font-family: 'Courier New', monospace;
+}
+
+.progress-track {
+  height: 8px;
+  background: #e7e9ee;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  transition: width 1s linear;
+}
+
+.finished-label {
+  text-align: center;
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+
+.timer-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}

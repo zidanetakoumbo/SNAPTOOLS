@@ -1,0 +1,59 @@
+<section class="page">
+  <h1>Générateur et Scanner de QR Code</h1>
+  <p>Créez un QR code à partir d'un texte ou d'un lien, téléchargez-le, ou scannez un QR code avec votre caméra.</p>
+
+  <section class="card">
+    <h2>Générer un QR code</h2>
+
+    <div class="field">
+      <label for="qr-text">Texte ou lien</label>
+      <input
+        id="qr-text"
+        type="text"
+        [formControl]="textControl"
+        placeholder="https://exemple.com"
+        aria-label="Texte ou lien à encoder en QR code"
+      />
+    </div>
+
+    @if (errorMessage) {
+      <p class="status error">{{ errorMessage }}</p>
+    }
+
+    @if (qrDataUrl) {
+      <div class="qr-preview">
+        <img [src]="qrDataUrl" alt="QR code généré pour le texte saisi" width="256" height="256" />
+      </div>
+      <a class="btn-primary download-btn" [href]="qrDataUrl" download="snaptools-qrcode.png" aria-label="Télécharger le QR code en image">
+        Télécharger
+      </a>
+    }
+  </section>
+
+  <section class="card">
+    <h2>Scanner un QR code</h2>
+
+    @if (!scannerSupported) {
+      <p class="status">Le scan par caméra n'est pas disponible sur ce navigateur.</p>
+    }
+
+    @if (scanError) {
+      <p class="status error">{{ scanError }}</p>
+    }
+
+    <video #video class="scanner-video" [class.active]="isScanning" muted playsinline></video>
+
+    @if (scanResult) {
+      <div class="result-box">
+        <div class="label">Contenu détecté</div>
+        <div class="value scan-result">{{ scanResult }}</div>
+      </div>
+    }
+
+    @if (scannerSupported) {
+      <button type="button" class="btn-primary" (click)="toggleScanning()" aria-label="Démarrer ou arrêter le scan de QR code">
+        {{ isScanning ? 'Arrêter le scan' : 'Scanner avec la caméra' }}
+      </button>
+    }
+  </section>
+</section>

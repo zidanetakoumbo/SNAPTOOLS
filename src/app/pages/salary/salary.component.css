@@ -1,0 +1,58 @@
+.card {
+  margin-bottom: 1rem;
+}
+
+.results {
+  animation: fade-in 0.2s ease;
+}
+
+.result-list {
+  margin: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+}
+
+.result-row dt {
+  color: var(--color-text-muted);
+}
+
+.result-row dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.result-row.total dd {
+  color: var(--color-primary-dark);
+}
+
+.disclaimer {
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.info-section p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

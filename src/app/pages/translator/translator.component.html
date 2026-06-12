@@ -1,0 +1,72 @@
+<section class="page">
+  <h1>Traducteur de Texte avec Voix</h1>
+  <p>
+    Traduisez votre texte entre plusieurs langues. Utilisez le microphone pour dicter, écoutez le résultat
+    et copiez-le en un clic.
+  </p>
+
+  <div class="card translator-card">
+    <h2 class="visually-hidden">Traduction</h2>
+
+    <div class="lang-row">
+      <select [formControl]="sourceLang" aria-label="Langue source">
+        @for (lang of languages; track lang.code) {
+          <option [value]="lang.code">{{ lang.label }}</option>
+        }
+      </select>
+      <button type="button" class="swap-btn" (click)="swapLanguages()" aria-label="Inverser les langues">⇄</button>
+      <select [formControl]="targetLang" aria-label="Langue cible">
+        @for (lang of languages; track lang.code) {
+          <option [value]="lang.code">{{ lang.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="text-block">
+      <div class="text-header">
+        <span class="text-label">Input ({{ sourceLang.value | uppercase }})</span>
+        @if (recognitionSupported) {
+          <button
+            type="button"
+            class="mic-btn"
+            [class.listening]="isListening"
+            (click)="toggleListening()"
+            [attr.aria-label]="isListening ? 'Arrêter la dictée vocale' : 'Démarrer la dictée vocale'"
+          >
+            🎤
+          </button>
+        }
+      </div>
+      <textarea
+        [formControl]="inputText"
+        rows="4"
+        maxlength="500"
+        placeholder="Saisissez votre texte…"
+        aria-label="Texte à traduire"
+      ></textarea>
+    </div>
+
+    <div class="text-block">
+      <div class="text-header">
+        <span class="text-label">Output ({{ targetLang.value | uppercase }})</span>
+        @if (isTranslating) {
+          <span class="translating">Traduction…</span>
+        }
+      </div>
+      <div class="output-text" aria-live="polite">{{ outputText || '—' }}</div>
+    </div>
+
+    @if (errorMessage) {
+      <p class="status error">{{ errorMessage }}</p>
+    }
+
+    <div class="actions">
+      <button type="button" class="btn-primary" (click)="copyOutput()" [disabled]="!outputText" aria-label="Copier la traduction">
+        {{ copyStatus || 'Copy' }}
+      </button>
+      <button type="button" class="btn-primary" (click)="speakOutput()" [disabled]="!outputText || !speechSupported" aria-label="Écouter la traduction">
+        Speak
+      </button>
+    </div>
+  </div>
+</section>

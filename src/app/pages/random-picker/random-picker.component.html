@@ -1,0 +1,55 @@
+<section class="page">
+  <h1>Sélecteur Aléatoire — Tirage au Sort</h1>
+  <p>Saisissez une liste d'options (une par ligne) et lancez le tirage au sort pour faire votre choix.</p>
+
+  <form class="card" [formGroup]="form" (ngSubmit)="pick()">
+    <h2>Vos options</h2>
+
+    <div class="field">
+      <label for="items">Une option par ligne</label>
+      <textarea
+        id="items"
+        rows="6"
+        formControlName="items"
+        (change)="onItemsChange()"
+        aria-label="Liste des options pour le tirage au sort"
+      ></textarea>
+    </div>
+
+    <label class="checkbox-field">
+      <input type="checkbox" formControlName="removeAfterPick" aria-label="Retirer l'option tirée de la liste" />
+      Retirer l'option tirée de la liste
+    </label>
+
+    <button type="submit" class="btn-primary" [disabled]="isSpinning || items.length === 0" aria-label="Lancer le tirage au sort">
+      {{ isSpinning ? 'Tirage en cours…' : 'Tirer au sort' }}
+    </button>
+  </form>
+
+  @if (isSpinning) {
+    <div class="card spin-display">
+      <div class="spin-value">{{ spinningLabel }}</div>
+    </div>
+  }
+
+  @if (result && !isSpinning) {
+    <div class="card result-box">
+      <div class="label">Résultat</div>
+      <div class="value">{{ result }}</div>
+    </div>
+  }
+
+  @if (history.length) {
+    <section class="card">
+      <div class="history-header">
+        <h2>Historique des tirages</h2>
+        <button type="button" class="btn-secondary" (click)="clearHistory()" aria-label="Effacer l'historique">Effacer</button>
+      </div>
+      <ul class="history-list">
+        @for (entry of history; track $index) {
+          <li>{{ entry }}</li>
+        }
+      </ul>
+    </section>
+  }
+</section>

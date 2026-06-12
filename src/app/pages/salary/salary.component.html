@@ -1,0 +1,104 @@
+<section class="page">
+  <h1>Calcul Salaire Brut en Net Précis et Rapide</h1>
+  <p>
+    Estimez en quelques secondes votre salaire net à partir du brut, ou retrouvez le brut nécessaire pour
+    atteindre un net précis, selon votre statut professionnel.
+  </p>
+
+  <form class="card" [formGroup]="form" (ngSubmit)="calculate()">
+    <h2>Vos informations</h2>
+
+    <div class="field">
+      <label for="direction">Sens du calcul</label>
+      <select id="direction" formControlName="direction" aria-label="Choisir le sens du calcul brut/net">
+        <option value="brutToNet">Brut → Net</option>
+        <option value="netToBrut">Net → Brut</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="amount">Montant ({{ form.value.period === 'annuel' ? 'annuel' : 'mensuel' }})</label>
+      <input
+        id="amount"
+        type="number"
+        min="0"
+        step="0.01"
+        formControlName="amount"
+        aria-label="Montant du salaire"
+      />
+    </div>
+
+    <div class="field">
+      <label for="period">Périodicité</label>
+      <select id="period" formControlName="period" aria-label="Choisir la périodicité du montant">
+        <option value="mensuel">Mensuel</option>
+        <option value="annuel">Annuel</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="status">Statut professionnel</label>
+      <select id="status" formControlName="status" aria-label="Choisir le statut professionnel">
+        @for (option of statusOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+
+    <button type="submit" class="btn-primary" aria-label="Lancer le calcul du salaire">Calculer</button>
+  </form>
+
+  @if (result) {
+    <section class="card results" aria-label="Résultats du calcul de salaire">
+      <h2>Résultats</h2>
+
+      <div class="result-box">
+        <div class="label">Salaire net mensuel</div>
+        <div class="value">{{ result.netMensuel | currency: 'EUR' : 'symbol' : '1.2-2' : 'fr' }}</div>
+      </div>
+
+      <div class="result-box">
+        <div class="label">Salaire brut mensuel</div>
+        <div class="value">{{ result.brutMensuel | currency: 'EUR' : 'symbol' : '1.2-2' : 'fr' }}</div>
+      </div>
+
+      <dl class="result-list">
+        <div class="result-row">
+          <dt>Net annuel</dt>
+          <dd>{{ result.netAnnuel | currency: 'EUR' : 'symbol' : '1.2-2' : 'fr' }}</dd>
+        </div>
+        <div class="result-row">
+          <dt>Brut annuel</dt>
+          <dd>{{ result.brutAnnuel | currency: 'EUR' : 'symbol' : '1.2-2' : 'fr' }}</dd>
+        </div>
+        <div class="result-row">
+          <dt>Cotisations salariales</dt>
+          <dd>{{ result.chargesSalariales | currency: 'EUR' : 'symbol' : '1.2-2' : 'fr' }}</dd>
+        </div>
+        <div class="result-row">
+          <dt>Cotisations patronales estimées</dt>
+          <dd>{{ result.chargesPatronales | currency: 'EUR' : 'symbol' : '1.2-2' : 'fr' }}</dd>
+        </div>
+        <div class="result-row total">
+          <dt>Coût employeur mensuel</dt>
+          <dd>{{ result.coutEmployeurMensuel | currency: 'EUR' : 'symbol' : '1.2-2' : 'fr' }}</dd>
+        </div>
+      </dl>
+
+      <p class="disclaimer">
+        Ces montants sont des estimations basées sur des taux moyens de cotisations françaises et peuvent
+        varier selon votre convention collective, votre lieu de résidence et votre situation personnelle.
+      </p>
+    </section>
+  }
+
+  <section class="card info-section">
+    <h2>Comment fonctionne la conversion brut/net en France ?</h2>
+    <p>
+      Le salaire brut correspond à la rémunération avant déduction des cotisations sociales (retraite,
+      assurance maladie, chômage, CSG/CRDS). Le salaire net est le montant effectivement perçu par le
+      salarié. Le taux de cotisations salariales varie principalement selon le statut : environ 22 % pour un
+      non-cadre, 25 % pour un cadre et 15 % dans la fonction publique.
+    </p>
+  </section>
+</section>

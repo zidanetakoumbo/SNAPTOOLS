@@ -1,0 +1,99 @@
+<section class="page">
+  <h1>Convertisseur de Devises Gratuit et Hors-Ligne</h1>
+  <p>
+    Convertissez rapidement entre plusieurs devises grâce aux derniers taux de change. Le dernier taux
+    récupéré reste disponible même sans connexion internet.
+  </p>
+
+  @if (isOffline) {
+    <div class="offline-banner" role="status">
+      Mode hors-ligne : les taux affichés datent du {{ rateDate || 'dernier chargement' }}.
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="error-banner" role="alert">{{ errorMessage }}</div>
+  }
+
+  <form class="card" [formGroup]="form" (ngSubmit)="convert()">
+    <h2 class="visually-hidden">Conversion de devises</h2>
+
+    <div class="field">
+      <label for="from-currency">From</label>
+      <div class="currency-row">
+        <select
+          id="from-currency"
+          formControlName="from"
+          (change)="convert()"
+          aria-label="Devise de départ"
+        >
+          @for (currency of currencies; track currency) {
+            <option [value]="currency">{{ currency }} — {{ currencyNames[currency] ?? currency }}</option>
+          }
+        </select>
+        <input
+          type="number"
+          min="0"
+          step="0.01"
+          formControlName="amount"
+          (input)="convert()"
+          aria-label="Montant à convertir"
+        />
+      </div>
+    </div>
+
+    <div class="swap-row">
+      <button type="button" class="swap-btn" (click)="swap()" aria-label="Inverser les devises">
+        ⇄ SWAP
+      </button>
+    </div>
+
+    <div class="field">
+      <label for="to-currency">To</label>
+      <div class="currency-row">
+        <select id="to-currency" formControlName="to" (change)="convert()" aria-label="Devise cible">
+          @for (currency of currencies; track currency) {
+            <option [value]="currency">{{ currency }} — {{ currencyNames[currency] ?? currency }}</option>
+          }
+        </select>
+        <output class="converted-amount" aria-label="Montant converti">
+          {{ convertedAmount !== null ? (convertedAmount | number: '1.2-2') : '—' }}
+        </output>
+      </div>
+    </div>
+
+    @if (rate !== null) {
+      <p class="rate-info">
+        1 {{ form.value.from }} = {{ rate | number: '1.4-4' }} {{ form.value.to }}
+        @if (rateDate) {
+          <span class="rate-date"> (au {{ rateDate }})</span>
+        }
+      </p>
+    }
+
+    @if (sparklinePath) {
+      <svg
+        class="sparkline"
+        [attr.viewBox]="'0 0 ' + chartWidth + ' ' + chartHeight"
+        preserveAspectRatio="none"
+        role="img"
+        aria-label="Évolution du taux de change sur les 7 derniers jours"
+      >
+        <path [attr.d]="sparklinePath" fill="none" class="sparkline-path" />
+      </svg>
+    }
+
+    <button type="button" class="btn-primary" (click)="updateRates()" [disabled]="isLoading || isOffline" aria-label="Mettre à jour les taux de change">
+      {{ isLoading ? 'Mise à jour…' : 'Update Rates' }}
+    </button>
+  </form>
+
+  <section class="card info-section">
+    <h2>D'où viennent ces taux de change ?</h2>
+    <p>
+      Les taux sont fournis par la Banque centrale européenne via une API publique et mis à jour chaque
+      jour ouvré. En l'absence de connexion, le dernier taux téléchargé est utilisé pour vous permettre de
+      continuer à convertir vos montants.
+    </p>
+  </section>
+</section>

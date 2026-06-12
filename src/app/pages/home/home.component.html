@@ -1,0 +1,48 @@
+<section class="hub">
+  <h1 class="visually-hidden">SnapTools : calculateurs, convertisseurs et outils pratiques gratuits</h1>
+
+  <a
+    class="donate-banner"
+    href="https://www.buymeacoffee.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Soutenir SnapTools en faisant un don"
+  >
+    🍌 BUY ME A NANO BANANA (DONATE)
+  </a>
+
+  <h2 class="hub-subtitle">Tous vos outils, en un clin d'œil</h2>
+
+  <div class="search-field">
+    <span class="search-icon" aria-hidden="true">🔍</span>
+    <input
+      type="search"
+      class="search-input"
+      placeholder="Rechercher un outil…"
+      aria-label="Rechercher un outil par son nom"
+      [value]="searchQuery()"
+      (input)="onSearchInput($event)"
+    />
+    @if (searchQuery()) {
+      <button type="button" class="search-clear" aria-label="Effacer la recherche" (click)="clearSearch()">
+        ✕
+      </button>
+    }
+  </div>
+
+  <nav class="tools-grid" aria-label="Liste des outils SnapTools">
+    @for (tool of filteredTools(); track tool.route) {
+      <a class="tool-card" [routerLink]="tool.route" [attr.aria-label]="tool.title + ' — ' + tool.description">
+        <span class="tool-icon" aria-hidden="true">{{ tool.icon }}</span>
+        <span class="tool-title">{{ tool.title }}</span>
+        <span class="tool-desc">{{ tool.description }}</span>
+      </a>
+    }
+  </nav>
+
+  @if (filteredTools().length === 0) {
+    <p class="no-results">Aucun outil ne correspond à « {{ searchQuery() }} ».</p>
+  }
+
+  <app-ad-banner />
+</section>

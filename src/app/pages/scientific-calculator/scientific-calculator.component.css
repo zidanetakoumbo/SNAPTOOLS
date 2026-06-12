@@ -1,0 +1,151 @@
+.calculator {
+  margin-bottom: 1rem;
+}
+
+.mode-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.mode-btn {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  background: #fff;
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.mode-btn.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.display {
+  background: #f4f6fa;
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1rem;
+  text-align: right;
+  margin-bottom: 1rem;
+  min-height: 4.5rem;
+}
+
+.display-value {
+  font-size: 2rem;
+  font-weight: 700;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.display-error {
+  margin-top: 0.4rem;
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.keypad {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.keypad-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.key {
+  border: 1px solid var(--color-border);
+  background: #fff;
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.key:hover {
+  background: #f4f6fa;
+}
+
+.key:active {
+  background: #e7e9ee;
+}
+
+.key-function {
+  font-size: 0.85rem;
+  color: var(--color-primary-dark);
+}
+
+.key-action {
+  color: var(--color-danger);
+  font-weight: 700;
+}
+
+.key-equals {
+  margin-top: 0.25rem;
+}
+
+.history-section {
+  margin-top: 1rem;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.history-header .btn-secondary {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.75rem;
+}
+
+.empty-state {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.history-list {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.history-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background: #f4f6fa;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.history-expr {
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60%;
+}
+
+.history-result {
+  font-weight: 700;
+}

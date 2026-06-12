@@ -1,0 +1,65 @@
+<section class="page">
+  <h1>Dictionnaire en Ligne Rapide</h1>
+  <p>Recherchez une définition, la prononciation et des synonymes. Les mots déjà recherchés restent disponibles hors-ligne.</p>
+
+  <div class="card search-card">
+    <h2 class="visually-hidden">Recherche d'un mot</h2>
+
+    <div class="search-row">
+      <input
+        type="search"
+        [formControl]="searchControl"
+        placeholder="Rechercher un mot…"
+        aria-label="Rechercher un mot dans le dictionnaire"
+        autocomplete="off"
+      />
+      <select [formControl]="languageControl" aria-label="Choisir la langue du dictionnaire">
+        @for (lang of languages; track lang.code) {
+          <option [value]="lang.code">{{ lang.label }}</option>
+        }
+      </select>
+    </div>
+
+    @if (recentSearches.length && !hasSearched) {
+      <div class="recent">
+        <span class="recent-label">Récents :</span>
+        @for (term of recentSearches; track term) {
+          <button type="button" class="recent-chip" (click)="searchRecent(term)">{{ term }}</button>
+        }
+      </div>
+    }
+  </div>
+
+  @if (isLoading) {
+    <p class="status">Recherche en cours…</p>
+  }
+
+  @if (errorMessage) {
+    <p class="status error">{{ errorMessage }}</p>
+  }
+
+  @for (entry of entries; track entry.word) {
+    <section class="card entry-card" aria-label="Résultat de recherche">
+      <h2>{{ entry.word }} @if (entry.phonetic) {<span class="phonetic">{{ entry.phonetic }}</span>}</h2>
+
+      @for (meaning of entry.meanings; track meaning.partOfSpeech) {
+        <div class="meaning">
+          <h3 class="part-of-speech">{{ meaning.partOfSpeech }}</h3>
+          <ol class="definitions">
+            @for (def of meaning.definitions; track def.definition) {
+              <li>
+                <p class="definition">{{ def.definition }}</p>
+                @if (def.example) {
+                  <p class="example">« {{ def.example }} »</p>
+                }
+                @if (def.synonyms && def.synonyms.length) {
+                  <p class="synonyms">Synonymes : {{ def.synonyms.join(', ') }}</p>
+                }
+              </li>
+            }
+          </ol>
+        </div>
+      }
+    </section>
+  }
+</section>

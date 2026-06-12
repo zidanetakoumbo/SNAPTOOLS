@@ -1,0 +1,60 @@
+<section class="page">
+  <h1>Minuteur Multiple en Ligne</h1>
+  <p>Créez plusieurs comptes à rebours simultanés pour la cuisine, le sport ou vos pauses. Une alerte sonore vous prévient à la fin.</p>
+
+  <form class="card" [formGroup]="form" (ngSubmit)="addTimer()">
+    <h2>Nouveau minuteur</h2>
+
+    <div class="field">
+      <label for="timer-label">Nom</label>
+      <input id="timer-label" type="text" formControlName="label" aria-label="Nom du minuteur" />
+    </div>
+
+    <div class="duration-row">
+      <div class="field">
+        <label for="timer-minutes">Minutes</label>
+        <input id="timer-minutes" type="number" min="0" max="180" formControlName="minutes" aria-label="Minutes" />
+      </div>
+      <div class="field">
+        <label for="timer-seconds">Secondes</label>
+        <input id="timer-seconds" type="number" min="0" max="59" formControlName="seconds" aria-label="Secondes" />
+      </div>
+    </div>
+
+    <button type="submit" class="btn-primary" aria-label="Ajouter un minuteur">Ajouter</button>
+  </form>
+
+  @if (timers.length === 0) {
+    <p class="status">Aucun minuteur pour le moment.</p>
+  }
+
+  @for (timer of timers; track timer.id) {
+    <section class="card timer-card" [class.finished]="timer.status === 'finished'" aria-label="Minuteur">
+      <div class="timer-header">
+        <h2>{{ timer.label }}</h2>
+        <button type="button" class="remove-btn" (click)="remove(timer)" aria-label="Supprimer ce minuteur">✕</button>
+      </div>
+
+      <div class="timer-display">{{ formatTime(timer.remainingSeconds) }}</div>
+
+      <div class="progress-track">
+        <div class="progress-fill" [style.width.%]="progress(timer)"></div>
+      </div>
+
+      @if (timer.status === 'finished') {
+        <p class="status finished-label">Terminé !</p>
+      }
+
+      <div class="timer-actions">
+        @if (timer.status === 'running') {
+          <button type="button" class="btn-secondary" (click)="pause(timer)" aria-label="Mettre en pause">Pause</button>
+        } @else {
+          <button type="button" class="btn-primary" (click)="start(timer)" [disabled]="timer.remainingSeconds === 0" aria-label="Démarrer le minuteur">
+            Démarrer
+          </button>
+        }
+        <button type="button" class="btn-secondary" (click)="reset(timer)" aria-label="Réinitialiser le minuteur">Réinitialiser</button>
+      </div>
+    </section>
+  }
+</section>

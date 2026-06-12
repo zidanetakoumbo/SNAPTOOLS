@@ -1,0 +1,88 @@
+.card {
+  margin-bottom: 1rem;
+}
+
+.chart {
+  width: 100%;
+  height: 160px;
+  display: block;
+  margin: 1rem 0;
+}
+
+.chart-area {
+  fill: rgba(0, 135, 230, 0.1);
+}
+
+.chart-line-value {
+  stroke: var(--color-primary);
+  stroke-width: 2;
+}
+
+.chart-line-invested {
+  stroke: var(--color-text-muted);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+}
+
+.legend {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-value {
+  background: var(--color-primary);
+}
+
+.dot-invested {
+  background: var(--color-text-muted);
+}
+
+.result-list {
+  margin: 0.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+}
+
+.result-row dt {
+  color: var(--color-text-muted);
+}
+
+.result-row dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.result-row.total dd {
+  color: var(--color-primary-dark);
+}
+
+.info-section p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}

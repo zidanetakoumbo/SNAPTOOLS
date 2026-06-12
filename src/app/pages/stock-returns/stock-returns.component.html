@@ -1,0 +1,108 @@
+<section class="page">
+  <h1>Calcul Rendement Bourse et Intérêts Composés</h1>
+  <p>
+    Estimez la croissance d'un investissement boursier avec versements mensuels et intérêts composés.
+    Visualisez la projection sur un graphique simple.
+  </p>
+
+  <form class="card" [formGroup]="form" (ngSubmit)="calculate()">
+    <h2>Paramètres de l'investissement</h2>
+
+    <div class="field">
+      <label for="initialCapital">Capital initial (€)</label>
+      <input
+        id="initialCapital"
+        type="number"
+        min="0"
+        step="100"
+        formControlName="initialCapital"
+        aria-label="Capital initial en euros"
+      />
+    </div>
+
+    <div class="field">
+      <label for="monthlyContribution">Versement mensuel (€)</label>
+      <input
+        id="monthlyContribution"
+        type="number"
+        min="0"
+        step="10"
+        formControlName="monthlyContribution"
+        aria-label="Versement mensuel en euros"
+      />
+    </div>
+
+    <div class="field">
+      <label for="annualRate">Taux de rendement annuel (%)</label>
+      <input
+        id="annualRate"
+        type="number"
+        step="0.1"
+        formControlName="annualRate"
+        aria-label="Taux de rendement annuel en pourcentage"
+      />
+    </div>
+
+    <div class="field">
+      <label for="years">Durée (années)</label>
+      <input
+        id="years"
+        type="number"
+        min="1"
+        max="60"
+        formControlName="years"
+        aria-label="Durée de l'investissement en années"
+      />
+    </div>
+
+    <button type="submit" class="btn-primary" aria-label="Calculer le rendement boursier">Calculer</button>
+  </form>
+
+  @if (result) {
+    <section class="card results" aria-label="Résultats de la simulation">
+      <h2>Projection</h2>
+
+      <div class="result-box">
+        <div class="label">Valeur finale estimée</div>
+        <div class="value">{{ result.finalValue | currency: 'EUR' : 'symbol' : '1.0-0' }}</div>
+      </div>
+
+      <svg
+        class="chart"
+        [attr.viewBox]="'0 0 ' + chartWidth + ' ' + chartHeight"
+        preserveAspectRatio="none"
+        role="img"
+        aria-label="Graphique de la croissance du capital et des versements dans le temps"
+      >
+        <path [attr.d]="chartAreaPath" class="chart-area" />
+        <path [attr.d]="chartInvestedPath" class="chart-line-invested" fill="none" />
+        <path [attr.d]="chartPath" class="chart-line-value" fill="none" />
+      </svg>
+
+      <div class="legend">
+        <span class="legend-item"><span class="dot dot-value"></span> Valeur du portefeuille</span>
+        <span class="legend-item"><span class="dot dot-invested"></span> Capital versé</span>
+      </div>
+
+      <dl class="result-list">
+        <div class="result-row">
+          <dt>Total versé</dt>
+          <dd>{{ result.totalInvested | currency: 'EUR' : 'symbol' : '1.0-0' }}</dd>
+        </div>
+        <div class="result-row total">
+          <dt>Intérêts générés</dt>
+          <dd>{{ result.totalInterest | currency: 'EUR' : 'symbol' : '1.0-0' }}</dd>
+        </div>
+      </dl>
+    </section>
+  }
+
+  <section class="card info-section">
+    <h2>Comment fonctionnent les intérêts composés ?</h2>
+    <p>
+      Avec les intérêts composés, les gains générés chaque mois sont réinvestis et produisent eux-mêmes des
+      intérêts. Sur le long terme, cet effet boule de neige peut considérablement augmenter la valeur de
+      votre portefeuille, surtout avec des versements réguliers.
+    </p>
+  </section>
+</section>
