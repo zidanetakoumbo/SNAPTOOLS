@@ -11,9 +11,12 @@
   height: var(--header-height);
   display: flex;
   align-items: center;
-  background: #ffffff;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
   padding: 0 1rem;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .logo-link {

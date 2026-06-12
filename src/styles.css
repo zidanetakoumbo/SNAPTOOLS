@@ -3,13 +3,24 @@
   --color-primary: #0087e6;
   --color-primary-dark: #0066b3;
   --color-accent-violet: #7b2ff7;
-  --color-bg: #ffffff;
+  --color-bg: #f4f6fa;
   --color-surface: #ffffff;
+  --color-surface-alt: #f4f6fa;
   --color-text: #1a1d29;
   --color-text-muted: #6b7280;
   --color-border: #e7e9ee;
   --color-success: #16a34a;
   --color-danger: #dc2626;
+
+  --color-info-bg: #eef6ff;
+  --color-info-border: #cfe6fb;
+  --color-warning-bg: #fff7e6;
+  --color-warning-border: #ffe2a8;
+  --color-warning-text: #92600a;
+  --color-success-bg: #e8f7ee;
+  --color-success-border: #bfe9cf;
+  --color-danger-bg: #fdecec;
+  --color-danger-border: #f7c9c9;
 
   --gradient-banana: linear-gradient(90deg, #ffd23f 0%, #ff9a3d 50%, #3ddc84 100%);
   --gradient-logo: linear-gradient(135deg, #0087e6 0%, #7b2ff7 100%);
@@ -27,6 +38,28 @@
   --header-height: 60px;
 }
 
+:root[data-theme='dark'] {
+  --color-bg: #11141d;
+  --color-surface: #1a1d29;
+  --color-surface-alt: #20242f;
+  --color-text: #f0f2f7;
+  --color-text-muted: #9aa1b2;
+  --color-border: #2d323f;
+
+  --color-info-bg: #1b2c40;
+  --color-info-border: #2c4a6b;
+  --color-warning-bg: #3a2f1a;
+  --color-warning-border: #5c4a26;
+  --color-warning-text: #f0c987;
+  --color-success-bg: #173b27;
+  --color-success-border: #2c5c40;
+  --color-danger-bg: #3a1f1f;
+  --color-danger-border: #5c2e2e;
+
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.35);
+  --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -40,10 +73,11 @@ body {
 
 body {
   font-family: var(--font-family-base);
-  background: #f4f6fa;
+  background: var(--color-bg);
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 h1,
@@ -100,7 +134,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: #ffffff;
+  background: var(--color-surface);
   color: var(--color-text);
   text-transform: uppercase;
   font-weight: 700;
@@ -110,11 +144,15 @@ button {
   border-radius: var(--radius-md);
   padding: 0.85rem 1.5rem;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, transform 0.05s ease;
 }
 
 .btn-secondary:hover {
-  background: #f4f6fa;
+  background: var(--color-surface-alt);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
 }
 
 .card {
@@ -122,6 +160,7 @@ button {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   padding: 1.25rem;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .field {
@@ -144,8 +183,9 @@ button {
   padding: 0.7rem 0.9rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
-  background: #fff;
+  background: var(--color-surface);
   color: var(--color-text);
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
 .field input:focus,
@@ -154,19 +194,40 @@ button {
   outline-offset: 1px;
 }
 
-.page {
+.page,
+.hub {
   max-width: 720px;
   margin: 0 auto;
   padding: 1rem 1rem 2rem;
+  animation: page-enter 0.35s ease both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page,
+  .hub {
+    animation: none;
+  }
 }
 
 .result-box {
-  background: #eef6ff;
-  border: 1px solid #cfe6fb;
+  background: var(--color-info-bg);
+  border: 1px solid var(--color-info-border);
   border-radius: var(--radius-md);
   padding: 1rem;
   text-align: center;
   margin: 1rem 0;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .result-box .value {

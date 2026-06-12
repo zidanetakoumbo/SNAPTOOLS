@@ -1,6 +1,7 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AdBannerComponent } from '../../core/ads/ad-banner.component';
+import { HapticsService } from '../../core/haptics.service';
 import { SeoService } from '../../core/seo.service';
 
 interface ToolCard {
@@ -93,6 +94,8 @@ export class HomeComponent implements OnInit {
     );
   });
 
+  private readonly haptics = inject(HapticsService);
+
   constructor(private readonly seo: SeoService) {}
 
   onSearchInput(event: Event): void {
@@ -102,6 +105,10 @@ export class HomeComponent implements OnInit {
 
   clearSearch(): void {
     this.searchQuery.set('');
+  }
+
+  onTap(): void {
+    this.haptics.tap();
   }
 
   ngOnInit(): void {

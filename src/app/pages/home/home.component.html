@@ -7,6 +7,7 @@
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Soutenir SnapTools en faisant un don"
+    (click)="onTap()"
   >
     🍌 BUY ME A NANO BANANA (DONATE)
   </a>
@@ -32,7 +33,12 @@
 
   <nav class="tools-grid" aria-label="Liste des outils SnapTools">
     @for (tool of filteredTools(); track tool.route) {
-      <a class="tool-card" [routerLink]="tool.route" [attr.aria-label]="tool.title + ' — ' + tool.description">
+      <a
+        class="tool-card"
+        [routerLink]="tool.route"
+        [attr.aria-label]="tool.title + ' — ' + tool.description"
+        (click)="onTap()"
+      >
         <span class="tool-icon" aria-hidden="true">{{ tool.icon }}</span>
         <span class="tool-title">{{ tool.title }}</span>
         <span class="tool-desc">{{ tool.description }}</span>
@@ -45,4 +51,21 @@
   }
 
   <app-ad-banner />
+
+  <footer class="credit-footer">
+    <p class="credit-text">
+      Développé avec <span class="heart" aria-hidden="true">❤️</span> par
+      <a
+        class="credit-link"
+        href="https://www.linkedin.com/in/zidane-mouaffo-b70b5a164/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Profil LinkedIn de Zidane MOUAFFO"
+        (click)="onTap()"
+      >
+        <span class="credit-name">Zidane MOUAFFO</span>
+        <span class="linkedin-badge" aria-hidden="true">in</span>
+      </a>
+    </p>
+  </footer>
 </section>
