@@ -5,10 +5,12 @@
 }
 
 .app-header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 10;
-  height: var(--header-height);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  height: calc(var(--header-height) + env(safe-area-inset-top));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,6 +18,7 @@
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
   padding: 0 1rem;
+  padding-top: env(safe-area-inset-top);
   transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
@@ -36,6 +39,13 @@
 .app-main {
   flex: 1;
   width: 100%;
+  padding-top: calc(var(--header-height) + env(safe-area-inset-top));
+}
+
+@supports (height: 100dvh) {
+  :host {
+    min-height: 100dvh;
+  }
 }
 
 .app-footer {

@@ -14,19 +14,34 @@
 
   <h2 class="hub-subtitle">Tous vos outils, en un clin d'œil</h2>
 
-  <div class="search-field">
-    <span class="search-icon" aria-hidden="true">🔍</span>
-    <input
-      type="search"
-      class="search-input"
-      placeholder="Rechercher un outil…"
-      aria-label="Rechercher un outil par son nom"
-      [value]="searchQuery()"
-      (input)="onSearchInput($event)"
-    />
-    @if (searchQuery()) {
-      <button type="button" class="search-clear" aria-label="Effacer la recherche" (click)="clearSearch()">
-        ✕
+  <div class="search-bar" [class.focused]="isSearchFocused()">
+    <div class="search-field">
+      <span class="search-icon" aria-hidden="true">🔍</span>
+      <input
+        #searchInput
+        type="search"
+        class="search-input"
+        placeholder="Rechercher un outil…"
+        aria-label="Rechercher un outil par son nom"
+        [value]="searchQuery()"
+        (input)="onSearchInput($event)"
+        (focus)="onSearchFocus()"
+        (blur)="onSearchBlur()"
+      />
+      @if (searchQuery()) {
+        <button type="button" class="search-clear" aria-label="Effacer la recherche" (click)="clearSearch()">
+          ✕
+        </button>
+      }
+    </div>
+    @if (isSearchFocused()) {
+      <button
+        type="button"
+        class="search-cancel"
+        (mousedown)="$event.preventDefault()"
+        (click)="cancelSearch(searchInput)"
+      >
+        Annuler
       </button>
     }
   </div>
@@ -54,7 +69,7 @@
 
   <footer class="credit-footer">
     <p class="credit-text">
-      Développé avec <span class="heart" aria-hidden="true">❤️</span> par
+      Développé avec  par
       <a
         class="credit-link"
         href="https://www.linkedin.com/in/zidane-mouaffo-b70b5a164/"

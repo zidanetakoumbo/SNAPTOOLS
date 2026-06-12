@@ -83,6 +83,7 @@ export class HomeComponent implements OnInit {
   ];
 
   readonly searchQuery = signal('');
+  readonly isSearchFocused = signal(false);
 
   readonly filteredTools = computed(() => {
     const query = this.searchQuery().trim().toLowerCase();
@@ -105,6 +106,20 @@ export class HomeComponent implements OnInit {
 
   clearSearch(): void {
     this.searchQuery.set('');
+  }
+
+  onSearchFocus(): void {
+    this.isSearchFocused.set(true);
+  }
+
+  onSearchBlur(): void {
+    this.isSearchFocused.set(false);
+  }
+
+  cancelSearch(input: HTMLInputElement): void {
+    this.searchQuery.set('');
+    this.isSearchFocused.set(false);
+    input.blur();
   }
 
   onTap(): void {
